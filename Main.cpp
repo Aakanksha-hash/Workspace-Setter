@@ -24,10 +24,36 @@ void create_folders(char *folder_name, short n)
     }
 }
 
+void make_files(char *name, short n)
+{
+    FILE *source, *target;
+    char ch;
+    for (int i = 0; i < n; ++i)
+    {
+
+        source = fopen("/home/mithil/Templates/cp", "r");
+        strcat(name, "/");
+        strcat(name, to_str[i]);
+        strcat(name, "/");
+        strcat(name, "Main.cpp");
+        printf("Copying template ... \n");
+        target = fopen(name, "w");
+        while ((ch = fgetc(source)) != EOF)
+        {
+            fputc(ch, target);
+        }
+        fclose(source);
+        fclose(target);
+        name = strtok(name, "/");
+    }
+}
+
 int main(int args, char **argv)
 {
     char *folder_name = argv[1];
     short sub_folders = atoi(argv[2]);
 
     create_folders(folder_name, sub_folders);
+
+    make_files(folder_name, sub_folders);
 }
