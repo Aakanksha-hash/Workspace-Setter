@@ -1,2 +1,2 @@
 all:
-	g++ Main.cpp -o setws
+	gcc Main.c -o setws

@@ -25,14 +25,17 @@ void create_folders(char *folder_name, short n)
     }
 }
 
-void make_files(char *name, short n)
+void make_files(char *name, short n, char *username)
 {
     FILE *source, *target;
-    char ch, tem_folder[50];
+    char ch, tem_folder[50], template_address[100] = "/home/";
+    strcat(template_address, username);
+    strcat(template_address, "/Templates/cp");
+        
     for (int i = 0; i < n; ++i)
     {
-
-        source = fopen("/home/mithil/Templates/cp", "r");
+        printf("%s\n",template_address);
+        source = fopen(template_address, "r");
         strcat(name, "/");
         strcat(name, to_str[i]);
         strcat(name, "/");
@@ -61,5 +64,5 @@ int main(int args, char **argv)
     char *user_name = getlogin();
     printf("Hi %s!\n\n", user_name);
     create_folders(folder_name, sub_folders);
-    make_files(folder_name, sub_folders);
+    make_files(folder_name, sub_folders, user_name);
 }
