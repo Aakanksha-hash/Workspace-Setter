@@ -2,7 +2,7 @@
 
 ### A tool to quickly set up your workspace for competitive programming.
 
-## Note: Make sure you have the template file names "cp" inside home/Templates/ folder.
+### Note: Make sure you have the template file names "cp" inside home/Templates/ folder.
 
 # Usage :
 
