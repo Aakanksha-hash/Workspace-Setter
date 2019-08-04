@@ -3,9 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-char *to_str[] = {"1", "2", "3", "4", "5","6","7"};
-
+char num[3];
 void create_folders(char *folder_name, short n)
 {
     char *name = folder_name;
@@ -14,12 +12,12 @@ void create_folders(char *folder_name, short n)
     mkdir(name, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
     strcat(name, "/");
-
     for (int i = 0; i < n; ++i)
     {
         strcat(name, "/");
-        printf("[+] Creating %s \n", to_str[i]);
-        mkdir(strcat(name, to_str[i]), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+        sprintf(num, "%d", i+1);
+        printf("[+] Creating %s \n", num);
+        mkdir(strcat(name, num), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
         name = strtok(name, "/");
     }
@@ -38,7 +36,8 @@ void make_files(char *name, short n, char *username)
         // printf("%s\n",template_address);
         source = fopen(template_address, "r");
         strcat(name, "/");
-        strcat(name, to_str[i]);
+        sprintf(num, "%d", i+1);
+        strcat(name, num);
         strcat(name, "/");
         strcpy(tem_folder, name);
         strcat(name, "Main.cpp");
@@ -59,12 +58,58 @@ void make_files(char *name, short n, char *username)
     }
 }
 
-int main(int args, char **argv)
+int main(int argc, char **argv)
 {
-    char *folder_name = argv[1];
-    short sub_folders = atoi(argv[2]);
-    char *user_name = getlogin();
+    // Declarations
+    char* folder_name;
+    char* user_name;
+    int sub_folder_count;
+    int opt;
+
+    // Assignments (Defults)
+    strcpy(folder_name,"Contest");
+    sub_folder_count = 1;
+
+    // Parsing the command line input
+    while ((opt = getopt(argc, argv, "n:c:h")) != -1)
+    {
+        switch (opt)
+        {
+        case 'n':
+            printf("Creating workspace : %s\n", optarg);
+            strcpy(folder_name,optarg);
+            break;
+        
+        case 'c':
+            sub_folder_count = atoi(optarg);
+            printf("%d\n",atoi(optarg));
+            break;
+        
+        case 'h':
+            printf("Welcome to setws by Mithil\n");
+            printf("Pass the name of the workspace as -n \"name\". By default \"Contest\"\n");
+            printf("Pass the number of sub-folder count as -c \"value\". By default 1.\n");
+            exit(0);
+            break;
+        
+        default:
+            printf("Incorrect usage! Check help by passing -h\n");
+            exit(1);
+            break;
+        }
+    }
+
+    // Assignment
+    user_name = getlogin();
+
+    // Greeting the user
     printf("[+] Hi %s!\n\n", user_name);
-    create_folders(folder_name, sub_folders);
-    make_files(folder_name, sub_folders, user_name);
+
+    // Creates the main folder and the sub-folders
+    create_folders(folder_name, sub_folder_count);
+
+    // Creates the files
+    make_files(folder_name, sub_folder_count, user_name);
+
+    return 0;
 }
