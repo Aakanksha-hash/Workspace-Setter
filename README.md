@@ -4,6 +4,25 @@
 
 ### Note: Make sure you have the template file names "cp" inside home/Templates/ folder.
 
+Sample template :
+```
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int t;
+	cin >> t;
+	while(t--)
+	{
+		
+	}
+}
+```
+
 # Usage :
 
 ## __setws -h__
