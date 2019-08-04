@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
 char num[3];
+
 void create_folders(char *folder_name, short n)
 {
     char *name = folder_name;
